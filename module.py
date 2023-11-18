@@ -14,7 +14,8 @@ class Subject:
     def notify(self):
         pass
 
-class CommandClassifier(Subject):
+# 负责通知而不需要知道command的具体实现
+class CommandSubject(Subject):
     def attach(self, observer):
         pass
 
