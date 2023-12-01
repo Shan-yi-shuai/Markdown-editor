@@ -2751,3 +2751,11 @@ session start at 20231201 13:57:29
 20231201 13:57:21 append-tail # Header1
 20231201 13:57:21 load _test.md
 20231201 13:57:21 append-head # Header1
+session start at 20231201 15:27:17
+20231201 15:27:24 load test.md
+20231201 15:27:27 stats
+session start at 20231201 15:27:47
+20231201 15:28:07 load test.md
+20231201 15:28:16 load _test.md
+20231201 15:28:17 stats
+20231201 15:28:35 stats all

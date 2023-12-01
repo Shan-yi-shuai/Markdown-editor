@@ -136,7 +136,8 @@ class CommandFactory:
                 print("Invalid command")
                 return None
         else:
-            raise ValueError("Unknown command type")
+            print("Unknown command type")
+            # raise ValueError("Unknown command type")
 
 
 # Command Interface

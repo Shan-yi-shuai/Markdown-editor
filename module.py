@@ -60,7 +60,7 @@ class LogModule(Observer):
         self.log_command_processor = LogCommandProcessor(self.log_management)
         
     def update(self, command_name, command_string):
-        self.log_management.add_log(command_string)
+        self.log_management.add_log(command_string.strip())
         return CommandFactory().create_command({LOG_COMMAND: self.log_command_processor}, command_name, command_string)
 
 class StatModule(Observer):
