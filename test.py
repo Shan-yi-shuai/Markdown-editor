@@ -338,10 +338,6 @@ class TestCommands(unittest.TestCase):
         self.command_identifier.process_command(f"stats all")
         self.assertEqual(mock_stdout.getvalue().strip(), f"{self.exit_file} 1 秒\n{self.not_exit_file} 2 秒")
     
-    
-    
-
-
 # 运行测试
 if __name__ == '__main__':
     unittest.main()

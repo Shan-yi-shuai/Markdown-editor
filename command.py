@@ -113,10 +113,8 @@ class CommandFactory:
                 return None
             if len(command_string.split()) == 1:
                 return ListTreeCommand(processors[DISPLAY_COMMAND])
-            if len(command_string.split()) != 2:
-                print("Invalid command")
-                return None
-            return DirTreeCommand(processors[DISPLAY_COMMAND], command_string.split(" ", 1)[1].strip())
+            else:
+                return DirTreeCommand(processors[DISPLAY_COMMAND], command_string.split(" ", 1)[1].strip())
         elif command_name == "history":
             if processors.get(LOG_COMMAND) == None:
                 return None

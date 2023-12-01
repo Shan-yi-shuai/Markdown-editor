@@ -2559,3 +2559,195 @@ session start at 20231201 10:44:08
 20231201 10:44:00 append-tail # Header1
 20231201 10:44:00 load _test.md
 20231201 10:44:00 append-head # Header1
+session start at 20231201 13:57:21
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+session start at 20231201 13:57:21
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-tail # Header1
+session start at 20231201 13:57:21
+20231201 13:57:21 load test.md
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 close 2
+20231201 13:57:21 load _test.md
+session start at 20231201 13:57:21
+20231201 13:57:21 load test.md
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 close 2
+20231201 13:57:21 load _test.md
+session start at 20231201 13:57:21
+20231201 13:57:21 load test.md
+20231201 13:57:21 close 2
+session start at 20231201 13:57:21
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 delete 1
+session start at 20231201 13:57:21
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 delete Header1
+session start at 20231201 13:57:21
+20231201 13:57:21 load test.md
+20231201 13:57:21 dir-tree 程序设计
+session start at 20231201 13:57:21
+20231201 13:57:21 load test.md
+20231201 13:57:21 dir-tree
+session start at 20231201 13:57:21
+20231201 13:57:21 history 2
+session start at 20231201 13:57:21
+20231201 13:57:21 history 1000000
+session start at 20231201 13:57:21
+20231201 13:57:21 history
+session start at 20231201 13:57:21
+20231201 13:57:21 load _test.md
+20231201 13:57:21 insert 1 # Header1
+session start at 20231201 13:57:21
+20231201 13:57:21 load _test.md
+20231201 13:57:21 insert # Header1
+session start at 20231201 13:57:21
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 list
+session start at 20231201 13:57:21
+20231201 13:57:21 load test.md
+20231201 13:57:21 list-tree
+session start at 20231201 13:57:21
+20231201 13:57:21 load test.md
+20231201 13:57:21 load test.md
+session start at 20231201 13:57:21
+20231201 13:57:21 load test.md
+session start at 20231201 13:57:21
+20231201 13:57:21 load _test.md
+session start at 20231201 13:57:21
+20231201 13:57:21 load test.md
+20231201 13:57:21 load _test.md
+session start at 20231201 13:57:21
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 redo
+session start at 20231201 13:57:21
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 undo
+20231201 13:57:21 redo
+session start at 20231201 13:57:21
+20231201 13:57:21 load test.md
+20231201 13:57:21 save
+session start at 20231201 13:57:21
+20231201 13:57:21 save
+session start at 20231201 13:57:21
+20231201 13:57:21 load test.md
+20231201 13:57:22 load _test.md
+20231201 13:57:24 stats all
+session start at 20231201 13:57:24
+20231201 13:57:24 load test.md
+20231201 13:57:29 stats current
+session start at 20231201 13:57:29
+20231201 13:57:29 load test.md
+20231201 13:57:29 load _test.md
+20231201 13:57:29 switch 1
+20231201 13:57:29 ws
+session start at 20231201 13:57:29
+20231201 13:57:29 load test.md
+20231201 13:57:29 load _test.md
+20231201 13:57:29 switch 3
+session start at 20231201 13:57:29
+20231201 13:57:29 load _test.md
+20231201 13:57:29 append-head # Header1
+20231201 13:57:29 undo
+session start at 20231201 13:57:29
+20231201 13:57:29 load _test.md
+20231201 13:57:29 append-head # Header1
+20231201 13:57:29 undo
+session start at 20231201 13:57:29
+20231201 13:57:29 load _test.md
+20231201 13:57:29 append-head # Header1
+20231201 13:57:29 save
+20231201 13:57:29 undo
+session start at 20231201 13:57:29
+20231201 13:57:29 load test.md
+20231201 13:57:29 load _test.md
+20231201 13:57:29 append-head # Header1
+20231201 13:57:29 ws
+20231201 13:57:29 load test.md
+20231201 13:57:29 load _test.md
+20231201 13:57:29 append-head # Header1
+20231201 13:57:29 ws
+20231201 13:57:29 load _test.md
+20231201 13:57:29 append-head # Header1
+20231201 13:57:29 save
+20231201 13:57:29 undo
+20231201 13:57:29 load _test.md
+20231201 13:57:29 append-head # Header1
+20231201 13:57:29 undo
+20231201 13:57:29 load _test.md
+20231201 13:57:29 append-head # Header1
+20231201 13:57:29 undo
+20231201 13:57:29 load test.md
+20231201 13:57:29 load _test.md
+20231201 13:57:29 switch 3
+20231201 13:57:29 load test.md
+20231201 13:57:29 load _test.md
+20231201 13:57:29 switch 1
+20231201 13:57:29 ws
+20231201 13:57:24 load test.md
+20231201 13:57:29 stats current
+20231201 13:57:21 load test.md
+20231201 13:57:22 load _test.md
+20231201 13:57:24 stats all
+20231201 13:57:21 save
+20231201 13:57:21 load test.md
+20231201 13:57:21 save
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 undo
+20231201 13:57:21 redo
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 redo
+20231201 13:57:21 load test.md
+20231201 13:57:21 load _test.md
+20231201 13:57:21 load _test.md
+20231201 13:57:21 load test.md
+20231201 13:57:21 load test.md
+20231201 13:57:21 load test.md
+20231201 13:57:21 load test.md
+20231201 13:57:21 list-tree
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 list
+20231201 13:57:21 load _test.md
+20231201 13:57:21 insert # Header1
+20231201 13:57:21 load _test.md
+20231201 13:57:21 insert 1 # Header1
+20231201 13:57:21 history
+20231201 13:57:21 history 1000000
+20231201 13:57:21 history 2
+20231201 13:57:21 load test.md
+20231201 13:57:21 dir-tree
+20231201 13:57:21 load test.md
+20231201 13:57:21 dir-tree 程序设计
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 delete Header1
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 delete 1
+20231201 13:57:21 load test.md
+20231201 13:57:21 close 2
+20231201 13:57:21 load test.md
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 close 2
+20231201 13:57:21 load _test.md
+20231201 13:57:21 load test.md
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1
+20231201 13:57:21 close 2
+20231201 13:57:21 load _test.md
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-tail # Header1
+20231201 13:57:21 load _test.md
+20231201 13:57:21 append-head # Header1

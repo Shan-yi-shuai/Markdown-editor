@@ -237,23 +237,3 @@ class FileManagement:
         self.files = []
         self.current_file_index = -1
         self.file_work_history = []
-    
-
-# file = File("test.md")
-# # file.close_file()
-# file.insert("#### test", 3)
-# file.delete_by_line_number(1)
-# file.show_file()
-
-FileModule = FileManagement()
-test = FileManagement()
-# FileModule.load_file("test.md")
-# FileModule.insert("##### test", 5)
-# FileModule.list()
-# FileModule.undo()
-# FileModule.list()
-# FileModule.redo()
-# FileModule.list()
-# FileModule.ws_file()
-# FileModule.close_file()
-# FileModule.ws_file()
