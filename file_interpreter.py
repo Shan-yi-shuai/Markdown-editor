@@ -1,3 +1,12 @@
+# 根结点
+ROOT = 'root'
+# 如果同一层有多个并列项，则最后一个符号为└──，其余均为├──
+L_SHAPED_DASH = '└── '
+T_SHAPED_DASH = '├── '
+I_SHAPED_DASH = '│   '
+SPACE = '    '
+
+
 class MarkDownInterpreter:
     def interpret(self, text):
         raise NotImplementedError
@@ -5,85 +14,329 @@ class MarkDownInterpreter:
 class MarkdownElement:
     def render(self):
         raise NotImplementedError
+    
+class RootElement(MarkdownElement):
+    def __init__(self):
+        self.children = []
+        self.list = []
+        self.text = None
+        self.level = 0
+    
+    def add(self, item):
+        self.children.append(item)
+    
+    def add_list(self, list_element):
+        self.list.append(list_element)
+    
+    def render(self):
+        content = ''
+        level_list = [False]
+        # list一定是叶子节点，所以如果出现则一定在header之前
+        for index, list_element in enumerate(self.list):
+            content += list_element.render(level = 0, base_level = 1, level_list = level_list)
+        for index, item in enumerate(self.children):
+            content += item.render(base_level = 1, tail = index == (len(self.children) - 1), level_list = level_list + [ index + 1 < len(self.children) ])
+        
+        return content
 
 class HeaderElement(MarkdownElement):
     def __init__(self, level, text):
         self.level = level
         self.text = text
+        self.children = []
+        self.list = []
+        self.successor = None
+    
+    def add(self, item):
+        self.children.append(item)
+    
+    def add_list(self, list_element):
+        self.list.append(list_element)
+    
+    def set_successor(self, successor):
+        self.successor = successor;
 
-    def render(self):
-        return f"<h{self.level}>{self.text}</h{self.level}>"
+    def render(self, base_level = 1, tail = True, level_list = [False, False]):
+        # content = SPACE * (self.level - base_level)
+        content = ''
+        for i in range(1, self.level - base_level + 1):
+            if level_list[i]:
+                content += I_SHAPED_DASH
+            else:
+                content += SPACE
+        
+        if tail:
+            content += L_SHAPED_DASH + self.text + '\n'
+        else:
+            content += T_SHAPED_DASH + self.text + '\n'
+        
+        for index, list_element in enumerate(self.list):
+            content += list_element.render(level = self.level, base_level = base_level, level_list = level_list)
+        for index, item in enumerate(self.children):
+            content += item.render(base_level = base_level, tail = index == (len(self.children) - 1), level_list = level_list + [ index + 1 < len(self.children) ])
+        
+        return content
 
 class UnorderedElement(MarkdownElement):
     def __init__(self, text):
         self.text = text
+        self.successor = None
+    
+    def set_successor(self, successor):
+        self.successor = successor;
 
-    def render(self):
-        return f"<li>{self.text}</li>"
+    def render(self, level, base_level = 1,  tail = True, level_list = [False, False]):
+        # content = SPACE * (level - base_level + 1)
+        content = ''
+        for i in range(1, level - base_level + 2):
+            if level_list[i]:
+                content += I_SHAPED_DASH
+            else:
+                content += SPACE
+        
+        if tail:
+            content += L_SHAPED_DASH
+        else:
+            content += T_SHAPED_DASH
+        return content + '·' + self.text + '\n'
 
-def OrderedElement(MarkdownElement):    
+class OrderedElement(MarkdownElement):    
     def __init__(self, text, index):
         self.text = text
         self.index = index
+        self.successor = None
+        
+    def set_successor(self, successor):
+        self.successor = successor;
 
-    def render(self):
-        return f"<li>{self.text}</li>"
+    def render(self, level, base_level = 1,  tail = True, level_list = [False, False]):
+        # content = SPACE * (level - base_level + 1)
+        content = ''
+        for i in range(1, level - base_level + 2):
+            if level_list[i]:
+                content += I_SHAPED_DASH
+            else:
+                content += SPACE
+        
+        if tail:
+            content += L_SHAPED_DASH
+        else:
+            content += T_SHAPED_DASH
+        return content + str(self.index) + '. ' + self.text + '\n'
 
 class UnorderedListElement(MarkdownElement):
     def __init__(self):
         self.items = []
+        self.successor = None
 
     def add_item(self, item):
         self.items.append(item)
+    
+    def set_successor(self, successor):
+        self.successor = successor;
 
-    def render(self):
-        list_items_html = ''.join(f"<li>{item}</li>" for item in self.items)
-        return f"<ul>{list_items_html}</ul>"
+    def render(self, level, base_level = 1, level_list = [False, False]):
+        content = ''
+        for index, item in enumerate(self.items):
+            content += item.render(level = level, base_level = base_level, tail = index == len(self.items) - 1, level_list = level_list)
+        return content
 
 class OrderedListElement(MarkdownElement):
     def __init__(self):
         self.items = []
+        self.successor = None
 
     def add_item(self, item):
         self.items.append(item)
+    
+    def set_successor(self, successor):
+        self.successor = successor;
 
-    def render(self):
-        list_items_html = ''.join(f"<li>{item}</li>" for item in self.items)
-        return f"<ol>{list_items_html}</ol>"
+    def render(self, level, base_level = 1, level_list = [False, False]):
+        content = ''
+        for index, item in enumerate(self.items):
+            content += item.render(level = level, base_level = base_level, tail = index == len(self.items) - 1, level_list = level_list)
+        return content
+    
+class RootInterpreter(MarkDownInterpreter):
+    def interpret(self, text = '', successor_element = None):
+        return RootElement()
 
 class HeaderInterpreter(MarkDownInterpreter):
-    def interpret(self, text):
-        level = text.count('#')
-        header_content = text.strip('# ').strip()
-        return HeaderElement(level, header_content)
+    def interpret(self, text, successor_element):
+        level = 0
+        for char in text:
+            if char == '#':
+                level += 1
+            else:
+                break
+        header_content = text[level:].strip()
+        header_element = HeaderElement(level, header_content)
+        
+        # assert isinstance(successor_element, RootElement) or isinstance(successor_element, HeaderElement)
+        while not(isinstance(successor_element, RootElement) or isinstance(successor_element, HeaderElement)):
+            successor_element = successor_element.successor
+        if (header_element.level > successor_element.level):
+            successor_element.add(header_element)
+            header_element.set_successor(successor_element)
+        else:
+            while header_element.level <= successor_element.level:
+                successor_element = successor_element.successor
+            successor_element.add(header_element)
+            header_element.set_successor(successor_element.successor)
+                
+        return header_element
 
 class UnorderedListInterpreter(MarkDownInterpreter):
-    def interpret(self, text):
-        list_element = UnorderedListElement()
-        for line in text.splitlines():
-            list_item = line.strip('* ').strip()
-            list_element.add_item(list_item)
-        return list_element
+    def interpret(self, text, successor_element):
+        element = UnorderedElement(text.strip('* ').strip())
+        if isinstance(successor_element, UnorderedListElement):
+            element.set_successor(successor_element)
+            successor_element.add_item(element)
+            return successor_element
+        elif isinstance(successor_element, OrderedListElement):
+            successor_element = successor_element.successor
+            list_element = UnorderedListElement()
+            list_element.set_successor(successor_element)
+            successor_element.add_list(list_element)
+            list_element.add_item(element)
+            return list_element
+        else:
+            list_element = UnorderedListElement()
+            list_element.set_successor(successor_element)
+            successor_element.add_list(list_element)
+            list_element.add_item(element)
+            return list_element
 
 class OrderedListInterpreter(MarkDownInterpreter):
-    def interpret(self, text):
-        list_element = OrderedListElement()
-        for line in text.splitlines():
-            list_item = line.split('.')[1].strip()
-            list_element.add_item(list_item)
-        return list_element
-
+    def interpret(self, text, successor_element):
+        element = OrderedElement(text.split('.')[1].strip(), text.split('.')[0].strip())
+        if isinstance(successor_element, OrderedListElement):
+            element.set_successor(successor_element)
+            successor_element.add_item(element)
+            return successor_element
+        elif isinstance(successor_element, UnorderedListElement):
+            successor_element = successor_element.successor
+            list_element = OrderedListElement()
+            list_element.set_successor(successor_element)
+            successor_element.add_list(list_element)
+            list_element.add_item(element)
+            return list_element
+        else:
+            list_element = OrderedListElement()
+            list_element.set_successor(successor_element)
+            list_element.add_item(element)
+            successor_element.add_list(list_element)
+            return list_element
 
 class InterpreterFactory:
     @staticmethod
     def get_interpreter(text):
-        if text.startswith('#'):
+        if text == '':
+            return None
+        elif text == ROOT:
+            return RootInterpreter()
+        elif text.startswith(('#')):
             return HeaderInterpreter()
-        elif text.startswith(('*', '-', '+')):
-            # todo
+        elif any(text.lstrip().startswith(mark) for mark in ('*', '-', '+')):
             return UnorderedListInterpreter()
-        elif text.startswith('1.'):
-            # todo
+        elif text.lstrip()[0].isdigit() and '.' in text:
             return OrderedListInterpreter()
         else:
             return None
+
+def parse_markdown(text):
+    root = None
+    successor_element = None
+    interpreter = InterpreterFactory.get_interpreter(ROOT)
+    root = interpreter.interpret(ROOT, successor_element)
+    successor_element = root
+
+    for line in text.split('\n')[:-1]:
+        interpreter = InterpreterFactory.get_interpreter(line)
+        if interpreter:
+            successor_element = interpreter.interpret(line, successor_element)
+        else:
+            raise Exception(f"Unknown markdown syntax: {line}")
+    return root
+
+def find_element(root, content):
+    if root.text == content:
+        return root
+    else:
+        for child in root.children:
+            result = find_element(child, content)
+            if result:
+                return result
+        return None
+
+text = """# Header 1
+## Header 2
+### Header 3
+#### Header 4
+* Unordered list 1
+* Unordered list 2
+* Unordered list 3
+1. Ordered list 1
+2. Ordered list 2
+3. Ordered list 3
+## Header 3
+"""
+
+text1 = """# 旅⾏清单
+## 亚洲
+1. 中国
+2. ⽇本
+## 欧洲
+"""
+
+text3 ="""# 我的资源
+## 程序设计
+### 软件设计
+#### 设计模式
+1. 观察者模式
+2. 策略模式
+3. 组合模式
+## ⼯具箱
+### Adobe
+"""
+
+tree ="""└── 我的资源
+    ├── 程序设计
+    │   └── 软件设计
+    │       └── 设计模式
+    │           ├── 1. 观察者模式
+    │           ├── 2. 策略模式
+    │           └── 3. 组合模式
+    └── ⼯具箱
+        └── Adobe
+"""
+# root = parse_markdown(text3)
+# content = root.render()
+# print(content)
+# print(tree)
+# element = find_element(root, 'Header 2')
+# content = element.render(element.level)
+# print(content)
+
+# def find_differences(str1, str2):
+#     differences = []
+#     max_len = max(len(str1), len(str2))
+
+#     for i in range(max_len):
+#         char1 = str1[i] if i < len(str1) else None
+#         char2 = str2[i] if i < len(str2) else None
+
+#         if char1 != char2:
+#             differences.append((i, char1, char2))
+
+#     return differences
+
+# # 使用示例
+# str1 = "hello world"
+# str2 = "h3llo worxd"
+# diffs = find_differences(content, tree)
+
+# for index, char1, char2 in diffs:
+#     print(f"Difference at position {index}: '{char1}' vs '{char2}'")
+

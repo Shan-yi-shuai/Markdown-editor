@@ -1,0 +1,14 @@
+load test3.md
+append-head # 书籍推荐
+append-tail * 《深入理解计算机系统》
+undo
+append-tail ## 编程
+append-tail * 《设计模式的艺术》
+redo
+list-tree
+append-tail * 《云原⽣：运⽤容器、函数计算和数据构建下⼀代应⽤》
+append-tail * 《深入理解Java虚拟机》
+undo
+redo
+list-tree
+save

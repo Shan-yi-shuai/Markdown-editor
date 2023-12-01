@@ -1,0 +1,10 @@
+load test2.md
+append-head # 旅⾏清单
+append-tail ## 亚洲
+append-tail 1. 中国
+append-tail 2. ⽇本
+delete 亚洲
+undo
+redo
+list-tree
+save

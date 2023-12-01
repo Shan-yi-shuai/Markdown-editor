@@ -1,0 +1,15 @@
+load test4.md
+append-head # 旅⾏清单
+append-tail ## 亚洲
+ws
+save
+append-tail 1. 中国
+load test3.md
+list-tree
+ws
+append-tail * 《软件⼯程》
+switch 1
+save
+switch 2
+close 2
+ws

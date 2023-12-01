@@ -1,0 +1,19 @@
+load test5.md
+append-head # 旅⾏清单
+append-tail ## 欧洲
+insert 2 ## 亚洲
+insert 3 1. 中国
+insert 4 2. ⽇本
+save
+undo
+list-tree
+delete 亚洲
+list-tree
+history 2
+undo
+list-tree
+redo
+list-tree
+redo
+list-tree
+save
